@@ -1,11 +1,15 @@
-import 'creational/creational/singleton/singleton.dart';
-import 'creational/creational/factory_method/email_notification_creator.dart';
-import 'creational/creational/factory_method/notification_creator.dart';
-import 'creational/creational/factory_method/sms_notification_creator.dart';
-import 'structural/adapter/structural/adapter/stripe_payment_adapter.dart';
-import 'structural/adapter/structural/adapter/local_payment_processor.dart';
-import 'structural/adapter/structural/adapter/payment_processor.dart';
-import 'structural/adapter/structural/adapter/stripe_sdk.dart';
+import 'creational/singleton/singleton.dart';
+import 'creational/factory_method/email_notification_creator.dart';
+import 'creational/factory_method/notification_creator.dart';
+import 'creational/factory_method/sms_notification_creator.dart';
+import 'structural/adapter/stripe_payment_adapter.dart';
+import 'structural/adapter/local_payment_processor.dart';
+import 'structural/adapter/payment_processor.dart';
+import 'structural/adapter/stripe_sdk.dart';
+import 'structural/decorator/caramel_decorator.dart';
+import 'structural/decorator/chocolate_decorator.dart';
+import 'structural/decorator/simple_coffee.dart';
+import 'structural/decorator/milk_decorator.dart';
 
 void main() {
   final config1 = AppConfig();
@@ -27,4 +31,24 @@ void main() {
 
   PaymentProcessor stripePayment = StripePaymentAdapter(StripeSDK());
   stripePayment.pay(100);
+  ///////////////////////////////////
+  
+Coffee coffee = SimpleCoffee();
+  print('${coffee.getDescription()} = ${coffee.getCost()} pound');
+
+  coffee = MilkDecorator(SimpleCoffee());
+  print('${coffee.getDescription()} = ${coffee.getCost()} pound');
+
+  
+  coffee = ChocolateDecorator(
+    CaramelDecorator(
+      MilkDecorator(
+        SimpleCoffee(),
+      ),
+    ),
+  );
+  print('${coffee.getDescription()} = ${coffee.getCost()} pound');
+
+
+
 }
