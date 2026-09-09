@@ -1,3 +1,8 @@
+import 'behavioral/strategy/cash_strategy.dart';
+import 'behavioral/strategy/check_out_context.dart';
+import 'behavioral/strategy/credit_card.dart';
+import 'behavioral/strategy/paypal_strategy.dart';
+import 'behavioral/strategy/payment_strategy.dart';
 import 'creational/singleton/singleton.dart';
 import 'creational/factory_method/email_notification_creator.dart';
 import 'creational/factory_method/notification_creator.dart';
@@ -49,6 +54,16 @@ Coffee coffee = SimpleCoffee();
   );
   print('${coffee.getDescription()} = ${coffee.getCost()} pound');
 
+//////////////////////////////////
+///
 
+  final checkout = CheckoutContext(CreditCardStrategy('1234567890123456'));
+  checkout.checkout(250);
+
+  checkout.setStrategy(PayPalStrategy('user@example.com'));
+  checkout.checkout(250);
+
+  checkout.setStrategy(CashOnDeliveryStrategy());
+  checkout.checkout(250);
 
 }
